@@ -112,7 +112,7 @@ export class ClipAvatar {
     if (!this.legs) return;
     const runF = this.w.run / Math.max(0.001, this.w.walk + this.w.run);
     const mv = Math.min(1, this.w.walk + this.w.run);
-    const A = mv * (0.52 + (0.85 - 0.52) * runF), K = mv * (0.75 + (1.35 - 0.75) * runF), FOOT = 0.45;
+    const A = mv * (0.42 + (0.80 - 0.42) * runF), K = mv * (0.75 + (1.35 - 0.75) * runF), FOOT = 0.45;
     const act = runF > 0.5 && this.act.Run ? this.act.Run : this.act.Walk;
     const p = act ? ((act.time / act.getClip().duration) % 1 + 1) % 1 : 0;
     const { P, Q1, Q2, tmp, arc, rx } = this._lq, v = this._lv;
@@ -123,13 +123,13 @@ export class ClipAvatar {
       P.copy(this._modelQuat(lg.t.parent));
       // legs are spread outwards a little (more while walking, extra for the leg that swings forward) so the feet never cross when seen from behind
       const side = lg.side === 'R' ? -1 : 1;
-      const ab = 0.10 + 0.14 * mv + 0.12 * mv * Math.max(0, Math.cos(ph));
+      const ab = 0.05 + 0.05 * mv + 0.05 * mv * Math.max(0, Math.cos(ph));     // thighs: small spread (a big one tears the skirt)
       // thigh
       v.set(side * Math.sin(ab), -Math.cos(th) * Math.cos(ab), Math.sin(th) * Math.cos(ab)).normalize().applyQuaternion(tmp.copy(P).invert());
       arc.setFromUnitVectors(lg.dirT, v); lg.t.quaternion.copy(arc).multiply(lg.qT);
       // shin
       Q1.copy(P).multiply(lg.t.quaternion);
-      const ph2 = th - knee, ab2 = ab * 0.45;
+      const ph2 = th - knee, ab2 = 0.05 + 0.15 * mv + 0.07 * mv * Math.max(0, Math.cos(ph));   // shins carry most of the spread, so the feet stay apart
       v.set(side * Math.sin(ab2), -Math.cos(ph2) * Math.cos(ab2), Math.sin(ph2) * Math.cos(ab2)).normalize().applyQuaternion(tmp.copy(Q1).invert());
       arc.setFromUnitVectors(lg.dirS, v); lg.s.quaternion.copy(arc).multiply(lg.qS);
       // foot: keep the sole level, toe up when the leg is forward, toe down when pushing off

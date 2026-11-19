@@ -9,7 +9,7 @@ export const AVATARS = [
   {
     id: 'farmer', name: 'Straw-Hat Farmer', url: './models/avatars/farmer.glb',
     clips: { Idle: 'Idle', Walk: 'Walk', Run: 'Run', Pick: 'Harvest' },
-    height: 1.4, scale: 1.4, handBone: 'Hand.R', designWalk: 1.3, designRun: 3.0, legs: true,   // legs driven procedurally (clip legs cross)
+    height: 1.4, scale: 1.4, handBone: 'Hand.R', designWalk: 1.0, designRun: 3.0, legs: true,   // legs driven procedurally (clip legs cross)
   },
   {
     id: 'melonfarmer', name: 'Melon Farmer', url: './models/avatars/melon_farmer.glb',
