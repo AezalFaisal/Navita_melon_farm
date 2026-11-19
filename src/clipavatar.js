@@ -19,7 +19,7 @@ export class ClipAvatar {
     this.height = H;
     this.camHeight = 0.70 * H;        // follow-camera look-at height
     this.eyeHeight = 0.90 * H;        // first-person eye height
-    this.tagHeight = 1.12 * H;        // name tag height
+    this.tagHeight = 1.12 * H;        // name tag height (raised above the head below, once the model's real height is known)
     this.previewCam = { y: 0.54 * H, dist: 2.9 * H };
     this.bobY = 0;
     this.t = Math.random() * 10;
@@ -64,6 +64,9 @@ export class ClipAvatar {
       this.act[n] = a;
     }
     this._initLegs();
+    this.model.updateMatrixWorld(true);                                   // tag floats clearly above the top of the head / hat
+    const top = new THREE.Box3().setFromObject(this.model).max.y;
+    if (isFinite(top) && top > 0.5 && top < 4) this.tagHeight = Math.max(this.tagHeight, top + 0.28);
     this.designWalk = cfg.designWalk || 1.2; this.designRun = cfg.designRun || 3.0;
     this.w = { idle: 1, walk: 0, run: 0 };
     this.gest = null;                       // { name, t, dur, w, onPeak, onDone, peaked }
@@ -118,13 +121,16 @@ export class ClipAvatar {
       const th = A * Math.sin(ph);                              // thigh swing, + = forward
       const knee = K * Math.max(0, Math.cos(ph)) + 0.05;        // knee bends while the leg swings forward
       P.copy(this._modelQuat(lg.t.parent));
+      // legs are spread outwards a little (more while walking, extra for the leg that swings forward) so the feet never cross when seen from behind
+      const side = lg.side === 'R' ? -1 : 1;
+      const ab = 0.10 + 0.14 * mv + 0.12 * mv * Math.max(0, Math.cos(ph));
       // thigh
-      v.set(0, -Math.cos(th), Math.sin(th)).applyQuaternion(tmp.copy(P).invert());
+      v.set(side * Math.sin(ab), -Math.cos(th) * Math.cos(ab), Math.sin(th) * Math.cos(ab)).normalize().applyQuaternion(tmp.copy(P).invert());
       arc.setFromUnitVectors(lg.dirT, v); lg.t.quaternion.copy(arc).multiply(lg.qT);
       // shin
       Q1.copy(P).multiply(lg.t.quaternion);
-      const ph2 = th - knee;
-      v.set(0, -Math.cos(ph2), Math.sin(ph2)).applyQuaternion(tmp.copy(Q1).invert());
+      const ph2 = th - knee, ab2 = ab * 0.45;
+      v.set(side * Math.sin(ab2), -Math.cos(ph2) * Math.cos(ab2), Math.sin(ph2) * Math.cos(ab2)).normalize().applyQuaternion(tmp.copy(Q1).invert());
       arc.setFromUnitVectors(lg.dirS, v); lg.s.quaternion.copy(arc).multiply(lg.qS);
       // foot: keep the sole level, toe up when the leg is forward, toe down when pushing off
       Q2.copy(Q1).multiply(lg.s.quaternion);
