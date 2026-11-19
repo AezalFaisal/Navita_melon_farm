@@ -1,0 +1,6 @@
+node_modules/
+dist/
+_old_avatars_removed/
+*.blend1
+*.log
+.DS_Store

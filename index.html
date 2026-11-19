@@ -1,0 +1,103 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Navita Melon Farm – Virtual Tour</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div id="labels"></div>
+  <div id="tags"></div>
+
+  <!-- Start screen -->
+  <div id="start" class="overlay">
+    <div class="card">
+      <div class="brand">NAVITA <span>MELON FARM</span></div>
+      <h1>Virtual Farm Tour</h1>
+      <p class="lead">Choose your avatar and walk around the farm with other visitors, or take the guided tour. You can also talk to your avatar: <em>“go to the cafe”</em>, <em>“run to the pool”</em>, <em>“pick up a melon”</em>, <em>“triple speed”</em>.</p>
+      <div id="avatars" class="avatars"></div>
+      <div class="namerow"><label for="playerName">Your name</label><input id="playerName" type="text" maxlength="16" autocomplete="off" placeholder="Visitor" /></div>
+      <div class="modes">
+        <button id="btnFree" class="primary" disabled>Explore freely</button>
+        <button id="btnTour" class="secondary" disabled>Guided tour</button>
+      </div>
+      <div id="loadbar"><div id="loadfill"></div></div>
+      <div id="loadtext">Loading farm…</div>
+      <p class="hint">Controls: <b>W A S D</b> / arrows to walk · <b>Shift</b> to run · <b>+ / –</b> speed 1×–3× · drag to look around · scroll to zoom · <b>V</b> voice · <b>T</b> tour · <b>L</b> labels</p>
+    </div>
+  </div>
+
+  <!-- In-game HUD -->
+  <div id="hud" hidden>
+    <div id="topleft" class="glass">
+      <div class="brandsm">NAVITA MELON FARM</div>
+      <div id="where">On the farm</div>
+      <div id="melons" title="Melons collected">🍈 <b id="melonCount">0</b></div>
+      <div id="online" title="Visitors on the farm right now">👥 <b id="onlineCount">1</b> online</div>
+    </div>
+    <div id="views">
+      <button id="vAerial" class="chip" title="Overview of the whole farm (key 1)">🛰 Aerial view</button>
+      <button id="vFollow" class="chip on" title="Behind the avatar (key 2)">🚶 Follow</button>
+      <button id="vFirst" class="chip" title="Through the avatar's eyes (key 3)">👁 First person</button>
+    </div>
+    <div id="emotes" hidden>
+      <button class="chip" data-e="Happy" title="Smile">😀</button>
+      <button class="chip" data-e="Laugh" title="Laugh">😆</button>
+      <button class="chip" data-e="Wink" title="Wink">😉</button>
+      <button class="chip" data-e="Surprised" title="Surprised">😮</button>
+      <button class="chip" data-e="Sad" title="Sad">😢</button>
+      <button class="chip" data-e="Angry" title="Angry">😠</button>
+      <button class="chip" data-g="Wave" title="Wave">👋</button>
+      <button class="chip" data-g="Cheer" title="Cheer">🎉</button>
+    </div>
+    <div id="topright">
+      <button id="btnSpeed" class="chip" title="Speed boost: click to cycle 1× → 2× → 3× (keys + and –)">⚡ <b id="speedChip">1×</b></button>
+      <button id="btnPlaces" class="chip">📍 Places</button>
+      <button id="btnTourPanel" class="chip">🧭 Tour</button>
+      <button id="btnLabels" class="chip on">🏷 Labels</button>
+      <button id="btnGuide" class="chip on">🔊 Voice guide</button>
+      <button id="btnFull" class="chip">⛶</button>
+    </div>
+
+    <div id="panelPlaces" class="panel glass" hidden>
+      <div class="ptitle">Go to…</div>
+      <div id="placeList"></div>
+    </div>
+    <div id="panelTour" class="panel glass" hidden>
+      <div class="ptitle">Guided tour</div>
+      <div id="tourStatus">Not started</div>
+      <div id="tourList"></div>
+      <div class="row">
+        <button id="tPrev" class="chip">⏮</button>
+        <button id="tStart" class="chip primary">▶ Start</button>
+        <button id="tPause" class="chip">⏸</button>
+        <button id="tNext" class="chip">⏭</button>
+        <button id="tStop" class="chip">⏹</button>
+      </div>
+      <div class="row"><span>Speed</span>
+        <button class="chip" id="sDown">–</button><b id="speedVal">1×</b><button class="chip" id="sUp">+</button></div>
+    </div>
+
+    <div id="caption" class="glass" hidden><b id="capTitle"></b><span id="capText"></span></div>
+    <div id="toast"></div>
+    <div id="transcript"></div>
+
+    <div id="bottom">
+      <div class="cmd glass">
+        <button id="mic" title="Voice commands (V)">🎤</button>
+        <input id="cmd" type="text" autocomplete="off" placeholder='Say or type a command: "go to the cafe"' />
+        <button id="send">Go</button>
+      </div>
+      <div id="chips"></div>
+    </div>
+
+    <canvas id="minimap" class="glass"></canvas>
+    <div id="joy" hidden><div id="knob"></div></div>
+    <button id="btnRun" class="runbtn" hidden>RUN</button>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

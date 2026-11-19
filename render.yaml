@@ -1,0 +1,10 @@
+# Render.com blueprint: one web service that serves the website AND the multiplayer socket.
+# Steps: push this folder to a GitHub repo -> Render dashboard -> New -> Blueprint -> pick the repo -> Apply.
+services:
+  - type: web
+    name: navita-melon-farm
+    runtime: node
+    plan: free                  # the free plan sleeps after ~15 min without visitors (first load then takes ~30 s)
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
