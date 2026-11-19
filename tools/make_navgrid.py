@@ -22,7 +22,11 @@ for j in range(NY):
             zcm[k] = int(round((h[0].z - 0.02) * 100))
             n += 1
 # rooms with open (dashed glass) sides that the NavMesh treated as solid: (x0, y0, x1, y1, floor height) in Blender metres
-OPEN_ROOMS = [(134, 125, 154, 147, 0.42)]          # Melon Information 3 (east wing)
+OPEN_ROOMS = [
+    (134, 125, 154, 147, 0.42),                    # Melon Information 3 (east wing)
+    (53, 54, 80, 90, 0.30),                        # greenhouse (controlled shed) floor
+    (80, 66, 82, 70, 0.30),                        # greenhouse door on the east side
+]
 for xa, ya, xb, yb, zf in OPEN_ROOMS:
     for y in range(ya, yb + 1):
         for x in range(xa, xb + 1):

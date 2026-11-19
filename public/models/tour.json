@@ -55,9 +55,9 @@
     -68
    ],
    "stand_three": [
-    68.5,
+    66.5,
     0.18,
-    -41.5
+    -88.8
    ],
    "tour_index": 5,
    "aliases": [
@@ -223,14 +223,14 @@
    "name": "Workshop",
    "label_text": "WORKSHOP",
    "label_three": [
-    66,
+    69,
     12,
-    -177
+    -179
    ],
    "stand_three": [
-    70.5,
+    69,
     0.17,
-    -168.5
+    -178
    ],
    "tour_index": 8,
    "aliases": [

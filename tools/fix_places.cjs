@@ -8,6 +8,8 @@ const FIX = {
   melon_info_3:       { stand: [144, 137],    label: [143, 137] },    // inside the east wing
   pond:               { stand: [184.5, 100.5], label: [185, 100] },   // at the water's edge
   drive_through:      { stand: [206.5, 56.5], label: [203, 58] },     // at the shop's serving window
+  controlled_shed:    { stand: [66.5, 88.8],  label: [68, 68] },      // inside the greenhouse, open walkway at the north end
+  workshop:           { stand: [69, 178],     label: [69, 179] },     // inside the curved workshop building
   drive_through_exit: { stand: [226.5, 79],   label: [227, 80] },     // where the drive-through lane meets the main road
 };
 for (const p of j.places) {
