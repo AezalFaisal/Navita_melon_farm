@@ -1,0 +1,8 @@
+# docker compose up -d --build     (then open http://<server-address>:3000)
+services:
+  navita:
+    build: .
+    image: navita-melon-farm
+    ports:
+      - "3000:3000"      # change the left number to publish on another port, e.g. "80:3000"
+    restart: unless-stopped

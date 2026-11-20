@@ -1,0 +1,12 @@
+node_modules
+dist
+tools
+_old_avatars_removed
+.git
+*.blend
+*.blend1
+*.py
+*.log
+/*.glb
+README.md
+render.yaml
